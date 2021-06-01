@@ -18,7 +18,7 @@ const Pizza=require('./Models/pizzaModel')
 const User=require('./Models/userModel')
 
 //database connection
-const DB_URL=process.env.DB_URI
+const DB_URL="mongodb+srv://sumathidbUser:karthi1620@cluster0.92l7q.mongodb.net/pizzadeliveryapp?retryWrites=true&w=majority"
 mongoose.connect(DB_URL,{useUnifiedTopology:true,useNewUrlParser:true,useFindAndModify:false,useCreateIndex:true})
 const db=mongoose.connection
 db.on('connected',()=>{
