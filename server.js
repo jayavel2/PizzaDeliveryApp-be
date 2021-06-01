@@ -1,0 +1,50 @@
+const express=require("express")
+const mongoose=require("mongoose")
+const cors=require("cors")
+const dotenv=require("dotenv")
+
+//middleware
+const app=express()
+app.use(express.json())
+app.use(cors())
+app.use(express.urlencoded({extended:true}))
+
+//importing router modules
+const PizzaRoute=require("./Routes/pizzaRoute")
+const UserRoute=require("./Routes/userRoute")
+const OrderRoute=require("./Routes/orderRoute")
+//importing models
+const Pizza=require('./Models/pizzaModel')
+const User=require('./Models/userModel')
+
+//database connection
+const DB_URL='mongodb+srv://sumathidbUser:karthi1620@cluster0.92l7q.mongodb.net/pizzadeliveryapp?retryWrites=true&w=majority'
+mongoose.connect(DB_URL,{useUnifiedTopology:true,useNewUrlParser:true,useFindAndModify:false,useCreateIndex:true})
+const db=mongoose.connection
+db.on('connected',()=>{
+    console.log("database connected")
+})
+db.on('error',()=>{
+    console.log(" DB connection Failed")
+})
+
+
+//initializing route
+app.use('/api/pizza',PizzaRoute)
+app.use('/api/users',UserRoute)
+app.use('/api/orders',OrderRoute)
+
+// app.use('/',async(req,res)=>{
+//     try{
+//         const pizzas=await Pizza.find()
+//         res.json(pizzas)
+//     }catch(err)
+//     {
+//         console.log(err)
+//     }
+//     res.send("hello World")
+// })
+
+
+const port=process.env.port||3100
+app.listen(port,()=>console.log(":::Server Started:::"))
