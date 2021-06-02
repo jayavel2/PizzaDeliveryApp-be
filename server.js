@@ -18,15 +18,13 @@ const Pizza=require('./Models/pizzaModel')
 const User=require('./Models/userModel')
 
 //database connection
-const DB_URL="mongodb+srv://sumathidbUser:karthi1620@cluster0.92l7q.mongodb.net/pizzadeliveryapp?retryWrites=true&w=majority"
+const DB_URL=process.env.DBURL||"mongodb://127.0.0.1:27017/pizzadeliveryapp"
 mongoose.connect(DB_URL,{useUnifiedTopology:true,useNewUrlParser:true,useFindAndModify:false,useCreateIndex:true})
 const db=mongoose.connection
-db.on('connected',()=>{
+db.on('open',()=>{
     console.log("database connected")
 })
-db.on('error',()=>{
-    console.log(" DB connection Failed")
-})
+
 
 
 //initializing route
@@ -34,16 +32,7 @@ app.use('/api/pizza',PizzaRoute)
 app.use('/api/users',UserRoute)
 app.use('/api/orders',OrderRoute)
 
-// app.use('/',async(req,res)=>{
-//     try{
-//         const pizzas=await Pizza.find()
-//         res.json(pizzas)
-//     }catch(err)
-//     {
-//         console.log(err)
-//     }
-//     res.send("hello World")
-// })
+
 
 
 const port=process.env.port||3100
