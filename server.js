@@ -19,6 +19,7 @@ const User=require('./Models/userModel')
 
 //database connection
 const DB_URL=process.env.DBURL||"mongodb://127.0.0.1:27017/pizzadeliveryapp"
+console.log(process.env.DBURL)
 mongoose.connect(DB_URL,{useUnifiedTopology:true,useNewUrlParser:true,useFindAndModify:false,useCreateIndex:true})
 const db=mongoose.connection
 db.on('open',()=>{
